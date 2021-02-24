@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Añadir Autor</title>
+</head>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/view/autor/autorNuevo}" th:object="${autor}" method="post" class="form-signin">
+        <h2 class="form-signin-heading text-center">Añadir un autor</h2>
+
+        <label for="name">Nombre:</label>
+        <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
+
+        <input type="submit" value="Añadir autor" class="btn btn-lg btn-primary btn-block">
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Editorial creado</title>
+<body>
+<h1 class="text-center">Nueva Editorial creada</h1>
+<table title="Nueva editorial creada" class="table table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Libros</th>
+    </tr>
+    <tr>
+        <td th:text="${editorial.id}"></td>
+        <td th:text="${editorial.name}"></td>
+        <td>
+            <ul th:each="libro : ${editorial?.libros}">
+                <li th:text="${libro.name}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Libros</title>
+</head>
+<body>
+<h1 class="text-center">Práctica 4</h1>
+<h3 class="text-align-left">Información</h3>
+<p>Esta práctica cuenta con una base de datos en la que se encuentran libros, editoriales y autores</p>
+<h3 class="text-align-left">Acceso a la consola</h3>
+<p>Mediante la consola H2 podemos acceder a las distintas tablas almacenadas en la base de datos y realizar consultas y
+    sentencias SQL.</p>
+<p>Para acceder a la consola de la base de datos, hay que acceder a <a href="http://localhost:8080/h2-console">H2-Console</a>,
+    poner la url de la base de datos, que es la siguiente (jdbc:h2:mem:practica4) y usar como usuario y contraseña
+    "admin". </p>
+<h3 class="text-align-left">Listado de URL para Postman</h3>
+<p>Para obtener datos a través de postman se pueden emplear las siguientes URL:</p>
+<ul>
+    <li>Libros:
+        <ol>
+            <li>GET:
+                <ul>
+                    <li>Mostrar todos los libros: <a
+                            href="http://localhost:8080/libros">http://localhost:8080/libros</a></li>
+                    <li>Realizar una búsqueda de libros por nombre sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080/libros/busqueda/nombre={name}">http://localhost:8080/libros/busqueda/nombre={name}</a>
+                    </li>
+                    <li>Buscar un libro determinado por su Id: <a href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por su autor sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080libros/autor={name}">http://localhost:8080libros/autor={name}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por su editorial sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080libros/editorial={name}">http://localhost:8080libros/editorial={name}</a>
+                    </li>
+                    <li>Mostrar todos los libros paginados en 3 libros por página, sustituyendo {page} por el número de
+                        página que queremos seleccionar: <a href="http://localhost:8080/libros/page={page}">http://localhost:8080/libros/page={page}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por nombre paginados en 3 libros por página, sustituyendo {name}
+                        por el nombre del libro y {page} por el número de
+                        página que queremos seleccionar: <a
+                                href="http://localhost:8080/libros/busqueda/nombre={name}/pagina={page}">http://localhost:8080/libros/busqueda/nombre={name}/pagina={page}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>POST:
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </li>
+</ul>
+</body>
+</html>
