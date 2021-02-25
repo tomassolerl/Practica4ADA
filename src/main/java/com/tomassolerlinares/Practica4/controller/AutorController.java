@@ -5,11 +5,13 @@ import com.tomassolerlinares.Practica4.domain.Libro;
 import com.tomassolerlinares.Practica4.repository.AutorRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@Validated
 public class AutorController {
 
     private final AutorRepository autorRepository;

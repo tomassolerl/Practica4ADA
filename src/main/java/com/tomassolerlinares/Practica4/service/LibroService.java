@@ -9,6 +9,7 @@ import com.tomassolerlinares.Practica4.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -56,10 +57,9 @@ public class LibroService {
 
         JPAQuery<Libro> query = new JPAQuery<Libro>(em)
                 .select(qLibro)
-                .from(qEditorial.libros, qLibro)
+                .from(qEditorial)
                 .join(qEditorial.libros, qLibro)
-                .where(qEditorial.name.contains(editorial))
-                .where(qLibro.name.contains(name));
+                .where(qEditorial.name.contains(editorial).and(qLibro.name.contains(name)));
         return query.fetch();
     }
 }

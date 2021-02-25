@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 public class LibroRestController {
 
     private static final int ITEMS_PER_PAGE = 3;
@@ -70,7 +72,10 @@ public class LibroRestController {
 
     @GetMapping("/libros/editorial/{editorial}/nombre/{name}")
     List<Libro> findByEditorialAndAutor(@PathVariable String editorial, @PathVariable String name){
-        List<Libro> libros = libroService.findByEditorialAndNameLike("%"+editorial+"%", "%"+name+"%");
+        List<Libro> libros = libroService.findByEditorialAndNameLike(editorial, name);
+        if (libros.isEmpty()) {
+            throw new LibroNotFoundException("No se ha encontrado ningún libro de la editorial " + editorial + " con el nombre " + name + ".");
+        }
         return libros;
     }
 
