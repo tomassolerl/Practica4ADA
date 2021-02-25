@@ -15,12 +15,13 @@
             <th>Editorial</th>
         </tr>
         <tr>
-            <td th:text="${libro.id}"></td>
-            <td th:text="${libro.name}"></td>
-            <td th:text="${libro.description}"></td>
-            <td th:text="${libro?.autor?.name}"></td>
-            <td th:text="${libro?.editorial?.name}"></td>
+            <td th:text="${libroBorrado?.id}"></td>
+            <td th:text="${libroBorrado?.name}"></td>
+            <td th:text="${libroBorrado?.description}"></td>
+            <td th:text="${libroBorrado?.autor?.name}"></td>
+            <td th:text="${libroBorrado?.editorial?.name}"></td>
         </tr>
     </table>
+    <h4 class="text-center"><a href="http://localhost:8080/view/libro/libros">Volver a libros</a></h4>
 </body>
 </html>

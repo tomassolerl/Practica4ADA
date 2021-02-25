@@ -9,13 +9,16 @@
 <body>
 <h1 class="text-center">Práctica 4</h1>
 <h3 class="text-align-left">Información</h3>
-<p>Esta práctica cuenta con una base de datos en la que se encuentran libros, editoriales y autores</p>
+<p>Práctica realizada por Tomás Soler Linares en la que se ha realizado un programa mediante la API Spring Boot que cuenta con una base de datos en la que se encuentran libros, editoriales y autores, y se pueden realizar consultas y transacciones a estos datos mediante el mismo navegador y Postman.</p>
 <h3 class="text-align-left">Acceso a la consola</h3>
 <p>Mediante la consola H2 podemos acceder a las distintas tablas almacenadas en la base de datos y realizar consultas y
     sentencias SQL.</p>
 <p>Para acceder a la consola de la base de datos, hay que acceder a <a href="http://localhost:8080/h2-console">H2-Console</a>,
     poner la url de la base de datos, que es la siguiente (jdbc:h2:mem:practica4) y usar como usuario y contraseña
     "admin". </p>
+
+<h3>Mostrar datos en el navegador</h3>
+<p>El acceso al programa desde el propio navegador es mediante este enlace: <a href="http://localhost:8080/view/libro/libros">http://localhost:8080/view/libro/libros</a></p>
 <h3 class="text-align-left">Listado de URL para Postman</h3>
 <p>Para obtener datos a través de postman se pueden emplear las siguientes URL:</p>
 <ul>
@@ -26,30 +29,160 @@
                     <li>Mostrar todos los libros: <a
                             href="http://localhost:8080/libros">http://localhost:8080/libros</a></li>
                     <li>Realizar una búsqueda de libros por nombre sustituyendo {name} por el nombre que queremos
-                        buscar: <a href="http://localhost:8080/libros/busqueda/nombre={name}">http://localhost:8080/libros/busqueda/nombre={name}</a>
+                        buscar: <a href="http://localhost:8080/libros/busqueda/nombre/{name}">http://localhost:8080/libros/busqueda/nombre/{name}</a>
                     </li>
                     <li>Buscar un libro determinado por su Id: <a href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
                     </li>
                     <li>Realizar una búsqueda de libros por su autor sustituyendo {name} por el nombre que queremos
-                        buscar: <a href="http://localhost:8080libros/autor={name}">http://localhost:8080libros/autor={name}</a>
+                        buscar: <a href="http://localhost:8080/libros/autor/{name}">http://localhost:8080/libros/autor/{name}</a>
                     </li>
                     <li>Realizar una búsqueda de libros por su editorial sustituyendo {name} por el nombre que queremos
-                        buscar: <a href="http://localhost:8080libros/editorial={name}">http://localhost:8080libros/editorial={name}</a>
+                        buscar: <a href="http://localhost:8080/libros/editorial/{name}">http://localhost:8080/libros/editorial/{name}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por su editorial y el nombre del libro, sustituyendo {editorial}
+                        por el nombre de la editorial y sustituyendo {name} por el nombre del libro que buscamos: <a
+                                href="http://localhost:8080/libros/editorial/{editorial}/nombre/{name}">http://localhost:8080/libros/editorial/{editorial}/nombre/{name}</a>
                     </li>
                     <li>Mostrar todos los libros paginados en 3 libros por página, sustituyendo {page} por el número de
-                        página que queremos seleccionar: <a href="http://localhost:8080/libros/page={page}">http://localhost:8080/libros/page={page}</a>
+                        página que queremos seleccionar: <a href="http://localhost:8080/libros/page/{page}">http://localhost:8080/libros/page/{page}</a>
                     </li>
-                    <li>Realizar una búsqueda de libros por nombre paginados en 3 libros por página, sustituyendo {name}
-                        por el nombre del libro y {page} por el número de
-                        página que queremos seleccionar: <a
-                                href="http://localhost:8080/libros/busqueda/nombre={name}/pagina={page}">http://localhost:8080/libros/busqueda/nombre={name}/pagina={page}</a>
+                    <li>Realizar una búsqueda de libros por nombre paginados en 3 libros por página, pasando como
+                        parámetros "name" con el valor del nombre y "page" con el número de página: <a
+                                href="http://localhost:8080/libros/busqueda/">http://localhost:8080/libros/busqueda/?name=Nombre&page=1</a>
                     </li>
                 </ul>
             </li>
             <li>POST:
                 <ul>
                     <li>
-
+                        Crear un libro pasando como cuerpo del mensaje un libro con todos sus campos menos Id: <a
+                            href="http://localhost:8080/libro/nuevo">http://localhost:8080/libro/nuevo</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                PUT:
+                <ul>
+                    <li>
+                        Modificar o añadir un libro sustituyendo {id} por el Id que queremos añadir/modificar y pasar
+                        como cuerpo del mensaje un libro con todos sus campos menos Id: <a
+                            href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                DELETE:
+                <ul>
+                    <li>
+                        Borrar un libro sustituyendo {id} por el Id de este: <a href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </li>
+    <li>Editoriales:
+        <ol>
+            <li>GET:
+                <ul>
+                    <li>Mostrar todas las editoriales: <a
+                            href="http://localhost:8080/editoriales">http://localhost:8080/editoriales</a></li>
+                    <li>Realizar una búsqueda de editoriales por nombre sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080/editorial/busqueda/nombre/{name}">http://localhost:8080/editorial/busqueda/nombre/{name}</a>
+                    </li>
+                    <li>Buscar una editorial determinada por su Id: <a href="http://localhost:8080/editorial/{id}">http://localhost:8080/editorial/{id}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por su editorial sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080/editorial/nombre/{name}/libros">http://localhost:8080/editorial/nombre/{name}/libros</a>
+                    </li>
+                    <li>Mostrar todas las editoriales paginadas en 3 editoriales por página, sustituyendo {page} por el
+                        número de
+                        página que queremos seleccionar: <a href="http://localhost:8080/editoriales/pagina/{page}">http://localhost:8080/editoriales/pagina/{page}</a>
+                    </li>
+                    <li>Realizar una búsqueda de editoriales por nombre paginadas en 3 editoriales por página, pasando
+                        como
+                        parámetros "name" con el valor del nombre y "page" con el número de página: <a
+                                href="http://localhost:8080/editoriales/busqueda/">http://localhost:8080/editoriales/busqueda/?name=Nombre&page=1</a>
+                    </li>
+                </ul>
+            </li>
+            <li>POST:
+                <ul>
+                    <li>
+                        Crear una editorial pasando como cuerpo del mensaje una editorial con todos sus campos menos Id:
+                        <a
+                                href="http://localhost:8080/editorial/nuevo">http://localhost:8080/editorial/nuevo</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                PUT:
+                <ul>
+                    <li>
+                        Modificar o añadir una editorial sustituyendo {id} por el Id que queremos añadir/modificar y
+                        pasar
+                        como cuerpo del mensaje un libro con todos sus campos menos Id: <a
+                            href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                DELETE:
+                <ul>
+                    <li>
+                        Borrar una editorial sustituyendo {id} por el Id de este: <a
+                            href="http://localhost:8080/libro/{id}">http://localhost:8080/libro/{id}</a>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </li>
+    <li>Autores:
+        <ol>
+            <li>GET:
+                <ul>
+                    <li>Mostrar todos los autores: <a
+                            href="http://localhost:8080/autores">http://localhost:8080/autores</a></li>
+                    <li>Realizar una búsqueda de autores por nombre sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080/autor/busqueda/nombre/{name}">http://localhost:8080/autor/busqueda/nombre/{name}</a>
+                    </li>
+                    <li>Buscar un autor determinado por su Id: <a href="http://localhost:8080/autor/{id}">http://localhost:8080/autor/{id}</a>
+                    </li>
+                    <li>Realizar una búsqueda de libros por su autor sustituyendo {name} por el nombre que queremos
+                        buscar: <a href="http://localhost:8080/autor/nombre/{name}/libros">http://localhost:8080/autor/nombre/{name}/libros</a>
+                    </li>
+                    <li>Mostrar todos los autores paginados en 3 autores por página, sustituyendo {page} por el número
+                        de
+                        página que queremos seleccionar: <a href="http://localhost:8080/autores/pagina/{page}">http://localhost:8080/autores/pagina/{page}</a>
+                    </li>
+                    <li>Realizar una búsqueda de autores por nombre paginados en 3 autores por página, pasando como
+                        parámetros "name" con el valor del nombre y "page" con el número de página: <a
+                                href="http://localhost:8080/autores/busqueda/">http://localhost:8080/autores/busqueda/?name=Nombre&page=1</a>
+                    </li>
+                </ul>
+            </li>
+            <li>POST:
+                <ul>
+                    <li>
+                        Crear un autor pasando como cuerpo del mensaje un autor con todos sus campos menos Id: <a
+                            href="http://localhost:8080/autor/nuevo">http://localhost:8080/autor/nuevo</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                PUT:
+                <ul>
+                    <li>
+                        Modificar o añadir un autor sustituyendo {id} por el Id que queremos añadir/modificar y pasar
+                        como cuerpo del mensaje un libro con todos sus campos menos Id: <a
+                            href="http://localhost:8080/autor/{id}">http://localhost:8080/autor/{id}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                DELETE:
+                <ul>
+                    <li>
+                        Borrar un autor sustituyendo {id} por el Id de este: <a href="http://localhost:8080/autor/{id}">http://localhost:8080/autor/{id}</a>
                     </li>
                 </ul>
             </li>

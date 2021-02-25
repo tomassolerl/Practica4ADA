@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Autor eliminado</title>
+<body>
+    <h1>Autor eliminado</h1>
+    <table title="Autor eliminado" class="table table-hover">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+        </tr>
+        <tr>
+            <td th:text="${autorBorrado?.id}"></td>
+            <td th:text="${autorBorrado?.name}"></td>
+        </tr>
+    </table>
+    <h4 class="text-center"><a href="http://localhost:8080/view/autor/autores">Volver a autores</a></h4>
+
+</body>
+</html>

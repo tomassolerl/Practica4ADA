@@ -1,12 +1,12 @@
 package com.tomassolerlinares.Practica4.restcontroller.exceptions.libro;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class LibroNotFoundException extends RuntimeException {
 
-    public LibroNotFoundException() {
-        super("No se ha podido encontrar ningún libro");
-    }
-
-    public LibroNotFoundException(Integer id) {
-        super("No se pudo encontrar el libro " + id);
+    public LibroNotFoundException(String mensaje) {
+        super(mensaje);
     }
 }

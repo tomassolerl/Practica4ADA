@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LibroController {
 
     private final LibroRepository libroRepository;
-
     private final AutorRepository autorRepository;
     private final EditorialRepository editorialRepository;
 
@@ -55,13 +54,15 @@ public class LibroController {
     @GetMapping("view/libro/borrarLibro")
     public String deleteLibro(Model model){
         model.addAttribute("libros", libroRepository.findAll());
+        model.addAttribute("libro", new Libro());
         return "libro/delete";
     }
 
     @PostMapping("view/libro/libroBorrado")
     public String deleted(Model model, @ModelAttribute Libro libro){
         System.out.println(libro.toString());
-        model.addAttribute("libro", libroRepository.findById(libro.getId()));
+        System.out.println(libroRepository.findById(libro.getId()).toString());
+        model.addAttribute("libroBorrado", libroRepository.findById(libro.getId()).get());
         libroRepository.deleteById(libro.getId());
         return "libro/deleted";
     }

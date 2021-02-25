@@ -37,4 +37,20 @@ public class EditorialController {
         editorialRepository.save(editorial);
         return "editorial/created";
     }
+
+    @GetMapping("view/editorial/borrarEditorial")
+    public String deleteEditorial(Model model){
+        model.addAttribute("editoriales", editorialRepository.findAll());
+        model.addAttribute("editorial", new Editorial());
+        return "editorial/delete";
+    }
+
+    @PostMapping("view/editorial/editorialBorrado")
+    public String deleted(Model model, @ModelAttribute Editorial editorial){
+        System.out.println(editorial.toString());
+        System.out.println(editorialRepository.findById(editorial.getId()).toString());
+        model.addAttribute("editorialBorrada", editorialRepository.findById(editorial.getId()).get());
+        editorialRepository.deleteById(editorial.getId());
+        return "editorial/deleted";
+    }
 }

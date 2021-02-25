@@ -16,4 +16,6 @@ public interface LibroRepository extends CrudRepository<Libro, Integer> {
 
     List<Libro> findByAutor(String name);
     List<Libro> findByEditorial(String name);
+
+    List<Libro> findByEditorialAndNameLike(String editorial, String name);
 }

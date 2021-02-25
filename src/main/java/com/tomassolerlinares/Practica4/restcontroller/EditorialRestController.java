@@ -1,12 +1,11 @@
 package com.tomassolerlinares.Practica4.restcontroller;
 
-import com.querydsl.jpa.impl.JPAQuery;
 import com.tomassolerlinares.Practica4.domain.Editorial;
 import com.tomassolerlinares.Practica4.domain.Libro;
-import com.tomassolerlinares.Practica4.domain.querydsl.QEditorial;
-import com.tomassolerlinares.Practica4.domain.querydsl.QLibro;
 import com.tomassolerlinares.Practica4.repository.EditorialRepository;
 import com.tomassolerlinares.Practica4.restcontroller.exceptions.editorial.EditorialNotFoundException;
+import com.tomassolerlinares.Practica4.restcontroller.exceptions.libro.LibroNotFoundException;
+import com.tomassolerlinares.Practica4.service.EditorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,75 +20,99 @@ public class EditorialRestController {
 
     private static final int ITEMS_PER_PAGE = 3;
     private final EditorialRepository editorialRepository;
+    private final EditorialService editorialService;
 
     @Autowired
     private EntityManager em;
 
     @Autowired
-    public EditorialRestController(EditorialRepository editorialRepository) {
+    public EditorialRestController(EditorialRepository editorialRepository, EditorialService editorialService) {
         this.editorialRepository = editorialRepository;
+        this.editorialService = editorialService;
     }
 
     @GetMapping("/editoriales")
-    public List<Editorial> findAll() {
-        return (List<Editorial>) editorialRepository.findAll();
+    List<Editorial> findAll() {
+        List<Editorial> editoriales = (List<Editorial>) editorialRepository.findAll();
+        if(editoriales.isEmpty()){
+            throw new EditorialNotFoundException("No se ha encontrado ninguna editorial.");
+        }
+        return editoriales;
+
     }
 
-    @GetMapping("/editorial/busqueda/nombre={name}")
+    @GetMapping("/editorial/busqueda/nombre/{name}")
     List<Editorial> findByName(@PathVariable String name) {
-        return editorialRepository.findByNameLike("%" + name + "%");
+        List<Editorial> editoriales = editorialRepository.findByNameLike("%" + name + "%");
+        if (editoriales.isEmpty()) {
+            throw new EditorialNotFoundException("No se ha encontrado ninguna editorial con el nombre '" + name + "'.");
+        }
+        return editoriales;
     }
 
     @GetMapping("/editorial/{id}")
-    Editorial one(@PathVariable Integer id){
-        return editorialRepository.findById(id).orElseThrow(() -> new EditorialNotFoundException(id));
+    Editorial one(@PathVariable Integer id) {
+        return editorialRepository.findById(id).orElseThrow(() -> new EditorialNotFoundException("No se ha encontrado ninguna editorial con el id " + id + "."));
     }
 
-    @GetMapping("editorial/editorial={name}/libros")
-    List<Libro> findAllByEditorial(@PathVariable String name){
-        QEditorial qEditorial = QEditorial.editorial;
-        QLibro qLibro = QLibro.libro;
-
-        JPAQuery<Libro> query = new JPAQuery<Libro>(em)
-                .select(qLibro)
-                .from(qEditorial)
-                .join(qEditorial.libros, qLibro)
-                .where(qEditorial.name.contains(name));
-        return query.fetch();
+    @GetMapping("/editorial/nombre/{name}/libros")
+    List<Libro> findAllByAutor(@PathVariable String name) {
+        List<Libro> editoriales = editorialService.findAllByEditorial(name);
+        if (editoriales.isEmpty()) {
+            throw new EditorialNotFoundException("No se ha encontrado ningún libro con el nombre de la editorial: '" + name + "'.");
+        }
+        return editoriales;
     }
 
-    @GetMapping("/editoriales/page={page}")
+    @GetMapping("/editoriales/pagina/{page}")
     Page<Editorial> getAll(@PathVariable int page) {
-        return editorialRepository.findAll(PageRequest.of(page - 1, ITEMS_PER_PAGE, Sort.by("id").ascending()));
+        Page<Editorial> editoriales = editorialRepository.findAll(PageRequest.of(page - 1, ITEMS_PER_PAGE, Sort.by("id").ascending()));
+        if (editoriales.isEmpty()) {
+            throw new EditorialNotFoundException("No se ha encontrado ninguna editorial en la página " + page + ".");
+        }
+        return editoriales;
     }
 
     @GetMapping("/editoriales/busqueda/")
     Page<Editorial> getByName(@RequestParam String name, @RequestParam int page) {
-        return editorialRepository.findByNameLike("%" + name + "%", PageRequest.of(page - 1, ITEMS_PER_PAGE, Sort.by("id").ascending()));
+        Page<Editorial> libros = editorialRepository.findByNameLike("%" + name + "%", PageRequest.of(page - 1, ITEMS_PER_PAGE, Sort.by("id").ascending()));
+        if (libros.isEmpty()) {
+            throw new EditorialNotFoundException("No se ha encontrado ninguna con el nombre '" + name + "' en la página " + page + ".");
+        }
+        return libros;
     }
 
     @PostMapping("/editorial/nuevo")
-    Editorial addEditorial(@RequestBody Editorial editorial) {
+    Editorial addLibro(@RequestBody Editorial editorial) {
+        Editorial nuevo = editorialRepository.save(editorial);
+        if(nuevo == null){
+            throw new EditorialNotFoundException("No se ha creado ninguna editorial.");
+        }
         return editorialRepository.save(editorial);
     }
 
     @PutMapping("/editorial/{id}")
-    Editorial addOrModify(@PathVariable Integer id, @RequestBody Editorial editorialEditada) {
+    Editorial addOrModify(@PathVariable Integer id, @RequestBody Editorial editorialEditado) {
         editorialRepository.findById(id).map(
                 editorial -> {
-                    editorial.setName(editorialEditada.getName());
-                    editorial.setLibros(editorialEditada.getLibros());
+                    editorial.setName(editorialEditado.getName());
                     return editorialRepository.save(editorial);
                 }).orElseGet(() -> {
-            editorialEditada.setId(id);
-            return editorialRepository.save(editorialEditada);
+            editorialEditado.setId(id);
+            return editorialRepository.save(editorialEditado);
         });
-        return editorialEditada;
+        if(editorialEditado == null){
+            throw new EditorialNotFoundException("No se ha podido realizar ninguna modificación.");
+        }
+        return editorialEditado;
     }
 
     @DeleteMapping("/editorial/{id}")
     public void delete(@PathVariable Integer id) {
         editorialRepository.deleteById(id);
+        if(editorialRepository.existsById(id)){
+            throw new EditorialNotFoundException("La editorial con id "+id+" no se ha eliminado.");
+        }
     }
 }
 

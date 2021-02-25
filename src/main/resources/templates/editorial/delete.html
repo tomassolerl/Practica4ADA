@@ -3,22 +3,22 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Borrar Libro</title>
+    <title>Borrar Editorial</title>
 </head>
 <body>
 <div class="container">
-    <form action="#" th:action="@{/view/libro/libroBorrado}" th:object="${libro}" method="post" class="form-signin">
-        <h2 class="form-signin-heading text-center">Borrar un libro</h2>
+    <form action="#" th:action="@{/view/editorial/editorialBorrado}" th:object="${editorial}" method="post" class="form-signin">
+        <h2 class="form-signin-heading text-center">Borrar una editorial</h2>
 
-        <label>Libro:</label>
+        <label>Editorial:</label>
         <select th:field="*{id}" class="form-control">
             <option value=""> --- </option>
-            <option th:each="librocargado : ${libros}"
-                    th:value="${librocargado.id}"
-                    th:utext="${librocargado.name}"/>
+            <option th:each="editorialcargada : ${editoriales}"
+                    th:value="${editorialcargada.id}"
+                    th:utext="${editorialcargada.name}"/>
         </select>
 
-        <input type="submit" value="Eliminar libro" class="btn btn-lg btn-primary btn-block">
+        <input type="submit" value="Eliminar editorial" class="btn btn-lg btn-primary btn-block">
     </form>
 </div>
 </body>

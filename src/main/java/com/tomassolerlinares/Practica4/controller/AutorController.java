@@ -35,4 +35,20 @@ public class AutorController {
         autorRepository.save(autor);
         return "autor/created";
     }
+
+    @GetMapping("view/autor/borrarAutor")
+    public String deleteEditorial(Model model){
+        model.addAttribute("autores", autorRepository.findAll());
+        model.addAttribute("autor", new Autor());
+        return "autor/delete";
+    }
+
+    @PostMapping("view/autor/autorBorrado")
+    public String deleted(Model model, @ModelAttribute Autor autor){
+        System.out.println(autor.toString());
+        System.out.println(autorRepository.findById(autor.getId()).toString());
+        model.addAttribute("autorBorrado", autorRepository.findById(autor.getId()).get());
+        autorRepository.deleteById(autor.getId());
+        return "autor/deleted";
+    }
 }
